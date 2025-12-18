@@ -9,6 +9,19 @@ exports.getProduct = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 }
+
+exports.getProductById = async (req, res) => {
+    try {
+        const product = await productModel.findById(req.params.id);
+        if (!product) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+        res.json(product);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+}
 exports.postProduct = async (req, res) => {
     const { name, description, image, price, stock, category } = req.body;
     try {
